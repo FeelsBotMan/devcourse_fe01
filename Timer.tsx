@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const Clock : React.FC = () => {
+const Clock: React.FC = () => {
   const [time, setTime] = useState(new Date());
 
-  setInterval(()=>{
-    setTime(new Date());
-  }, 1000);
-  
-  return {
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
     <div>
-      현재 시간 : {time.toLocaleTimeString()}
+      현재 시간: {time.toLocaleTimeString()}
     </div>
-  }
-}
+  );
+};
 
 export default Clock;
